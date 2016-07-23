@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Matching Game Assessment</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <style type="text/css">
+    img {
+        position: absolute;
+    }
+    div.container {
+        width:1001px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #leftSide {
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        }
+    #rightSide {
+        position: absolute;
+        left: 515px;
+        border-left: 1px solid black;
+        width: 500px;
+        height: 500px;
+        }
+    </style>
+</head>
+<body onload="generateFaces()">
+
+<div class="container">
+    <div class="row col-sm-12">
+    <h2>Matching Game</h2>
+    <p>Click on the extra smiling face on the left.</p>
+        <div id="leftSide"></div>
+        <div id="rightSide"></div>
+    </div>  
+</div>
+
+<script>
+
+var numberOfFaces = 5;
+var theLeftSide = document.getElementById("leftSide");
+var theRightSide = document.getElementById("rightSide");
+
+function generateFaces() {
+
+    for(var i = 0; i < numberOfFaces; i++) {
+        img = document.createElement("img");
+        img.src="http://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
+        img.style.top = Math.floor(Math.random() * 401) + "px";
+        img.style.left = Math.floor(Math.random() * 401) + "px";
+        theLeftSide.appendChild(img);
+        }
+
+    leftSideImages = theLeftSide.cloneNode(true);
+    leftSideImages.removeChild(leftSideImages.lastChild);
+    theRightSide.appendChild(leftSideImages);
+
+    }
+
+</script>
+
+</body>
+</html>

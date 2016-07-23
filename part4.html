@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Matching Game Assessment</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <style type="text/css">
+    img {
+        position: absolute;
+    }
+    div.container {
+        width:1001px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    #leftSide {
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        }
+    #rightSide {
+        position: absolute;
+        left: 515px;
+        border-left: 1px solid black;
+        width: 500px;
+        height: 500px;
+        }
+    </style>
+</head>
+<body onload="generateFaces()">
+
+<div class="container">
+    <div class="row col-sm-12">
+    <h2>Matching Game</h2>
+    <p>Click on the extra smiling face on the left.</p>
+        <div id="leftSide"></div>
+        <div id="rightSide"></div>
+    </div>  
+</div>
+
+<script>
+
+var numberOfFaces = 5;
+var theLeftSide = document.getElementById("leftSide");
+var theRightSide = document.getElementById("rightSide");
+var theBody = document.getElementsByTagName("body")[0];
+var sounds = ['cry', 'applause', 'rpg', 'descending']
+var sound = sounds[Math.floor(Math.random()*sounds.length)];
+
+function generateFaces() {
+
+    removeFaces();
+
+    for(var i = 0; i < numberOfFaces; i++) {
+        img = document.createElement("img");
+        img.src="http://home.cse.ust.hk/~rossiter/mooc/matching_game/smile.png";
+        img.style.top = Math.floor(Math.random() * 401) + "px";
+        img.style.left = Math.floor(Math.random() * 401) + "px";
+        theLeftSide.appendChild(img);
+        }
+
+    leftSideImages = theLeftSide.cloneNode(true);
+    leftSideImages.removeChild(leftSideImages.lastChild);
+    theRightSide.appendChild(leftSideImages);
+
+    theLeftSide.lastChild.onclick = function nextLevel(event){
+            PlaySound("shotgun");
+            event.stopPropagation();
+            numberOfFaces += 5;
+            generateFaces();
+        }
+    }
+
+theBody.onclick = function gameOver() {
+    PlaySound(sound);
+    changeBackground('black');
+    alert("Game Over!");
+    theBody.onclick = null;
+    theLeftSide.lastChild.onclick = null;
+    location.reload();
+} 
+
+function removeFaces() {
+    while (theLeftSide.firstChild) {
+        theLeftSide.removeChild(theLeftSide.firstChild);
+    }
+    while (theRightSide.firstChild){
+        theRightSide.removeChild(theRightSide.firstChild);
+    }
+}
+
+function changeBackground(color) {
+   document.body.style.background = color;
+}
+
+function PlaySound(soundObj) {
+      var sound = document.getElementById(soundObj);
+      sound.play();
+  }
+
+</script>
+
+<audio src="http://soundbible.com/mp3/Button Click On-SoundBible.com-459633989.mp3" autostart="false" id="click"></audio>
+<audio src="http://soundbible.com/mp3/just_born_baby-daniel_simon.mp3" autostart="false" id="cry"></audio>
+<audio src="http://soundbible.com/mp3/shotgun-mossberg590-RA_The_Sun_God-451502290.mp3" autostart="false" id="shotgun"></audio>
+<audio src="http://soundbible.com/mp3/Audience_Applause-Matthiew11-1206899159.mp3" autostart="false" id="applause"></audio>
+<audio src="http://soundbible.com/mp3/RPG_Plus_Shrapnel-Mike_Koenig-802194222.mp3" autostart="false" id="rpg"></audio>
+<audio src="http://soundbible.com/mp3/descending_craft-Sonidor-991848481.mp3" autostart="false" id="descending"></audio>
+
+</body>
+</html>
